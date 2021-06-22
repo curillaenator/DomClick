@@ -15,6 +15,7 @@ export interface IQuestion {
 
 export interface IMainState {
   questions: IQuestion[] | null;
+  curQuestion: number | null;
 }
 
 // REDUCERS

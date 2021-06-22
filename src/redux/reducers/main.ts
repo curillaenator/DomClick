@@ -5,6 +5,7 @@ import type { IQuestion, IMainState, TAction, TThunk } from "../../types/types";
 const SET_QUESTIONS = "main/SET_QUESTIONS";
 
 const initialState: IMainState = {
+  curQuestion: null,
   questions: null,
 };
 

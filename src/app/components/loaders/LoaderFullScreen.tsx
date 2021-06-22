@@ -29,7 +29,7 @@ export const LoaderFullScreen: FC = () => {
   return (
     <LoaderStyled>
       <img className="loading_svg" src={loader} alt="" />
-      <div className="loading_text">Загрузка</div>
+      <div className="loading_text">Loading</div>
     </LoaderStyled>
   );
 };
