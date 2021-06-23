@@ -1,12 +1,17 @@
 import { Reducer, AnyAction } from "redux";
+import { batch } from "react-redux";
 import { api } from "../../api/api";
+
 import type { IQuestion, IMainState, TAction, TThunk } from "../../types/types";
 
+const SET_IS_QUESTIONS = "main/SET_IS_QUESTIONS";
 const SET_QUESTIONS = "main/SET_QUESTIONS";
+const SET_CUR_QUESTION = "main/SET_CUR_QUESTION";
 
 const initialState: IMainState = {
-  curQuestion: null,
-  questions: null,
+  isQuestions: false,
+  questions: [],
+  curQuestion: 0,
 };
 
 export const main: Reducer<IMainState, AnyAction> = (
@@ -14,8 +19,14 @@ export const main: Reducer<IMainState, AnyAction> = (
   action
 ) => {
   switch (action.type) {
+    case SET_IS_QUESTIONS:
+      return { ...state, isQuestions: action.payload };
+
     case SET_QUESTIONS:
       return { ...state, questions: action.payload };
+
+    case SET_CUR_QUESTION:
+      return { ...state, curQuestion: action.payload };
 
     default:
       return state;
@@ -24,14 +35,28 @@ export const main: Reducer<IMainState, AnyAction> = (
 
 // ACTIONS
 
-const setQuestions: TAction<IQuestion[] | null> = (payload) => ({
+const setIsQuestions: TAction<boolean> = (payload) => ({
+  type: SET_IS_QUESTIONS,
+  payload,
+});
+
+const setQuestions: TAction<IQuestion[] | []> = (payload) => ({
   type: SET_QUESTIONS,
+  payload,
+});
+
+const setCurQuestion: TAction<number> = (payload) => ({
+  type: SET_CUR_QUESTION,
   payload,
 });
 
 // THUNKS
 
 export const getQuestions = (): TThunk => async (dispatch) => {
-  const questions = await api.getQuestions();
-  dispatch(setQuestions(questions));
+  const questions: IQuestion[] = await api.getQuestions();
+
+  batch(() => {
+    dispatch(setQuestions(questions));
+    dispatch(setIsQuestions(true));
+  });
 };

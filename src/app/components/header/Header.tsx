@@ -1,7 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
 
-// import { Button } from "@material-ui/core";
 import { colors } from "../../../utils/colors";
 
 const HeaderStyled = styled.header`
@@ -10,8 +9,9 @@ const HeaderStyled = styled.header`
   align-items: center;
   width: 100%;
   height: 120px;
-  padding: 32px;
-  background-color: ${colors.primaryBrownDark};
+  padding: 0 32px;
+  border-radius: 4px;
+  background-color: ${colors.primaryIndigo800};
 
   .title {
     color: ${colors.basicWhite};

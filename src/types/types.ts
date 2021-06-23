@@ -14,11 +14,12 @@ export interface IQuestion {
 }
 
 export interface IMainState {
-  questions: IQuestion[] | null;
-  curQuestion: number | null;
+  isQuestions: boolean;
+  questions: IQuestion[] | [];
+  curQuestion: number;
 }
 
 // REDUCERS
 
-export type TAction<T> = (payload?: T) => { type: string; payload?: T };
+export type TAction<T> = (payload: T) => { type: string; payload: T };
 export type TThunk = ThunkAction<void, TState, unknown, AnyAction>;

@@ -1,10 +1,12 @@
 import { FC, useEffect } from "react";
+import { Switch, Route } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../utils/typedHooks";
 import styled from "styled-components";
 
 import { LoaderFullScreen } from "./components/loaders/LoaderFullScreen";
+import { Header } from "./components/header/Header";
 import { StartPage } from "./pages/StartPage";
-
+import { QuizPage } from "./pages/QuizPage";
 
 import { getQuestions } from "../redux/reducers/main";
 
@@ -14,7 +16,6 @@ const AppStyled = styled.main`
   max-width: 1280px;
   min-width: 320px;
   margin: 0 auto;
-  /* padding: 0 32px; */
   color: ${colors.primaryBrownDark};
 
   @media (min-width: 768px) {
@@ -24,17 +25,22 @@ const AppStyled = styled.main`
 
 export const App: FC = () => {
   const dispatch = useAppDispatch();
-  const { questions } = useAppSelector((state) => state.main);
+  const { isQuestions } = useAppSelector((state) => state.main);
 
   useEffect(() => {
-    if (!questions) dispatch(getQuestions());
-  }, [dispatch, questions]);
+    if (!isQuestions) dispatch(getQuestions());
+  }, [dispatch, isQuestions]);
 
-  if (!questions) return <LoaderFullScreen />;
+  if (!isQuestions) return <LoaderFullScreen />;
 
   return (
     <AppStyled>
-      <StartPage />
+      <Header />
+
+      <Switch>
+        <Route exact path="/" render={() => <StartPage />} />
+        <Route path="/quiz" render={() => <QuizPage />} />
+      </Switch>
     </AppStyled>
   );
 };
