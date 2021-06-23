@@ -1,13 +1,19 @@
 import { FC } from "react";
 import Checkbox from "@material-ui/core/Checkbox";
 
-interface IChbox {
+interface ICheckboxComp {
   input: any;
   meta: any;
+  label: any;
 }
 
-export const CheckboxComp: FC<IChbox> = ({ input, meta, ...props }) => {
-//   console.log(input);
+export const CheckboxComp: FC<ICheckboxComp> = ({
+  input,
+  meta,
+  label,
+  ...props
+}) => {
+  // console.log(label);
   return (
     <div>
       <Checkbox
@@ -16,7 +22,7 @@ export const CheckboxComp: FC<IChbox> = ({ input, meta, ...props }) => {
         id={input.name}
       />
       <label htmlFor={input.name} style={{ cursor: "pointer" }}>
-        {input.name}
+        {label}
       </label>
     </div>
   );

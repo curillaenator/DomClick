@@ -13,10 +13,16 @@ export interface IQuestion {
   incorrect_answers: string[];
 }
 
+export interface IAnswer {
+  question: string;
+  answer: string[];
+}
+
 export interface IMainState {
   isQuestions: boolean;
   questions: IQuestion[] | [];
   curQuestion: number;
+  answers: IAnswer[] | [];
 }
 
 // REDUCERS

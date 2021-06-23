@@ -1,14 +1,17 @@
 import { FC } from "react";
 import { Form, Field } from "react-final-form";
 import styled from "styled-components";
+import { useAppDispatch } from "../../../utils/typedHooks";
 
 import { Button } from "@material-ui/core";
 import { CheckboxComp } from "../inputs/Checkbox";
 import { RadioComp } from "../inputs/Radio";
 
+import { handleAnswers } from "../../../redux/reducers/main";
+
 import { colors } from "../../../utils/colors";
 
-import type { IQuestion } from "../../../types/types";
+import type { IQuestion, IAnswer } from "../../../types/types";
 
 interface IQuestionStyled {
   color: string;
@@ -50,6 +53,8 @@ export const Question: FC<IQuestion> = ({
   correct_answer,
   incorrect_answers,
 }) => {
+  const dispatch = useAppDispatch();
+
   const color = {
     easy: colors.easy,
     medium: colors.medium,
@@ -61,7 +66,19 @@ export const Question: FC<IQuestion> = ({
   );
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    let answer = null;
+
+    if (type === "multiple") {
+      answer = { question: question, answer: Object.keys(data) };
+    }
+
+    if (type === "boolean") {
+      answer = { question: question, answer: Object.values(data) };
+    }
+
+    // console.log(answer);
+
+    dispatch(handleAnswers(answer));
   };
 
   return (
@@ -74,13 +91,19 @@ export const Question: FC<IQuestion> = ({
       <Form
         onSubmit={onSubmit}
         render={({ handleSubmit, form, pristine, values }) => {
-          console.log(values);
+          //   console.log(values);
+          const submitter = () => {
+            form.submit();
+            form.reset();
+          };
+
           return (
             <form className="options" onSubmit={handleSubmit}>
               {type === "multiple" &&
-                answers.map((opt) => (
+                answers.map((opt, i) => (
                   <Field
                     name={opt}
+                    label={opt}
                     type="checkbox"
                     component={CheckboxComp}
                     key={opt}
@@ -90,7 +113,8 @@ export const Question: FC<IQuestion> = ({
               {type === "boolean" &&
                 answers.map((opt) => (
                   <Field
-                    name={question}
+                    name={"boolean"}
+                    label={opt}
                     type="radio"
                     value={opt}
                     component={RadioComp}
@@ -103,7 +127,7 @@ export const Question: FC<IQuestion> = ({
                   variant="contained"
                   color="primary"
                   size="large"
-                  onClick={form.submit}
+                  onClick={submitter}
                   disabled={pristine}
                 >
                   NEXT QUESTION
