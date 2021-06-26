@@ -16,6 +16,9 @@ import type { IQuestion, IAnswer } from "../../../types/types";
 interface IQuestionStyled {
   color: string;
 }
+interface IQRender extends IQuestion {
+  curQ: number;
+}
 
 const QuestionStyled = styled.div<IQuestionStyled>`
   padding: 0 32px;
@@ -45,14 +48,17 @@ const QuestionStyled = styled.div<IQuestionStyled>`
   }
 `;
 
-export const Question: FC<IQuestion> = ({
+export const Question: FC<IQRender> = ({
   category,
   type,
   difficulty,
   question,
   correct_answer,
   incorrect_answers,
+  curQ,
 }) => {
+  console.log(curQ);
+  
   const dispatch = useAppDispatch();
 
   const color = {
@@ -69,29 +75,41 @@ export const Question: FC<IQuestion> = ({
     let answer = null;
 
     if (type === "multiple") {
-      answer = { question: question, answer: Object.keys(data) };
+      const answArr = Object.keys(data).map((d) => d.replace("OpTiOn", ""));
+      answer = { question: question, answer: answArr };
     }
 
     if (type === "boolean") {
       answer = { question: question, answer: Object.values(data) };
     }
 
-    // console.log(answer);
+    console.log(answer);
 
     dispatch(handleAnswers(answer));
+  };
+
+  const decode = (text: string) => {
+    const div = document.createElement("div");
+    div.innerHTML = text;
+    return div.innerText;
   };
 
   return (
     <QuestionStyled color={color[difficulty]}>
       <div className="title">
-        <h3 className="title_question">{question}</h3>
+        <h3 className="title_question">{decode(question)}</h3>
         <div className="title_difficulty">{difficulty}</div>
       </div>
 
       <Form
         onSubmit={onSubmit}
         render={({ handleSubmit, form, pristine, values }) => {
-          //   console.log(values);
+          const dis: boolean =
+            pristine ||
+            (type === "multiple"
+              ? Object.values(values).every((val) => val === false)
+              : false);
+
           const submitter = () => {
             form.submit();
             form.reset();
@@ -100,13 +118,13 @@ export const Question: FC<IQuestion> = ({
           return (
             <form className="options" onSubmit={handleSubmit}>
               {type === "multiple" &&
-                answers.map((opt, i) => (
+                answers.map((opt) => (
                   <Field
-                    name={opt}
-                    label={opt}
+                    name={`OpTiOn${opt}`}
+                    label={decode(opt)}
                     type="checkbox"
                     component={CheckboxComp}
-                    key={opt}
+                    key={`OpTiOn${opt}`}
                   />
                 ))}
 
@@ -128,9 +146,9 @@ export const Question: FC<IQuestion> = ({
                   color="primary"
                   size="large"
                   onClick={submitter}
-                  disabled={pristine}
+                  disabled={dis}
                 >
-                  NEXT QUESTION
+                  {curQ < 9 ? "NEXT QUESTION" : "WATCH RESULTS"}
                 </Button>
               </div>
             </form>

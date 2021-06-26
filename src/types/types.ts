@@ -23,6 +23,7 @@ export interface IMainState {
   questions: IQuestion[] | [];
   curQuestion: number;
   answers: IAnswer[] | [];
+  isResults: boolean;
 }
 
 // REDUCERS

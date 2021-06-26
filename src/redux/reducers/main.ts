@@ -20,6 +20,7 @@ const initialState: IMainState = {
   questions: [],
   curQuestion: 0,
   answers: [],
+  isResults: false,
 };
 
 export const main: Reducer<IMainState, AnyAction> = (
@@ -80,11 +81,20 @@ export const getQuestions = (): TThunk => async (dispatch) => {
 export const handleAnswers = (answer: any): TThunk => {
   return (dispatch, getState) => {
     const answers: IAnswer[] = [...getState().main.answers, answer];
-    const nextQuestion: number = answers.length < 10 ? answers.length : 9;
+    const nextQuestion: number = answers.length;
 
-    batch(() => {
-      dispatch(setAnswers(answers));
-      dispatch(setCurQuestion(nextQuestion));
-    });
+    if (nextQuestion < 10) {
+      batch(() => {
+        dispatch(setAnswers(answers));
+        dispatch(setCurQuestion(nextQuestion));
+      });
+    }
+
+    if (nextQuestion >= 10) {
+      batch(() => {
+        dispatch(setAnswers(answers));
+        // dispatch(setCurQuestion(nextQuestion));
+      });
+    }
   };
 };

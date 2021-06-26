@@ -13,7 +13,7 @@ export const CheckboxComp: FC<ICheckboxComp> = ({
   label,
   ...props
 }) => {
-  // console.log(label);
+  // console.log(props);
   return (
     <div>
       <Checkbox
