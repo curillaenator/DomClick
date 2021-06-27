@@ -14,6 +14,8 @@ const SET_IS_QUESTIONS = "main/SET_IS_QUESTIONS";
 const SET_QUESTIONS = "main/SET_QUESTIONS";
 const SET_CUR_QUESTION = "main/SET_CUR_QUESTION";
 const SET_ANSWERS = "main/SET_ANSWERS";
+const SET_IS_RESULTS = "main/SET_IS_RESULTS";
+const RESET_STATE = "main/RESET_STATE";
 
 const initialState: IMainState = {
   isQuestions: false,
@@ -40,6 +42,12 @@ export const main: Reducer<IMainState, AnyAction> = (
     case SET_ANSWERS:
       return { ...state, answers: action.payload };
 
+    case SET_IS_RESULTS:
+      return { ...state, isResults: action.payload };
+
+    case RESET_STATE:
+      return { ...initialState };
+
     default:
       return state;
   }
@@ -64,6 +72,16 @@ const setCurQuestion: TAction<number> = (payload) => ({
 
 const setAnswers: TAction<IAnswer[] | []> = (payload) => ({
   type: SET_ANSWERS,
+  payload,
+});
+
+const setIsResults: TAction<boolean> = (payload) => ({
+  type: SET_IS_RESULTS,
+  payload,
+});
+
+export const resetState: TAction<null> = (payload) => ({
+  type: RESET_STATE,
   payload,
 });
 
@@ -93,7 +111,7 @@ export const handleAnswers = (answer: any): TThunk => {
     if (nextQuestion >= 10) {
       batch(() => {
         dispatch(setAnswers(answers));
-        // dispatch(setCurQuestion(nextQuestion));
+        dispatch(setIsResults(true));
       });
     }
   };

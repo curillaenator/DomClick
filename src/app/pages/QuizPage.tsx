@@ -1,5 +1,4 @@
 import { FC } from "react";
-// import { useHistory } from "react-router";
 import styled from "styled-components";
 import { useAppSelector } from "../../utils/typedHooks";
 

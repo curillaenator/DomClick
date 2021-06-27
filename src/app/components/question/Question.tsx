@@ -11,7 +11,7 @@ import { handleAnswers } from "../../../redux/reducers/main";
 
 import { colors } from "../../../utils/colors";
 
-import type { IQuestion, IAnswer } from "../../../types/types";
+import type { IQuestion } from "../../../types/types";
 
 interface IQuestionStyled {
   color: string;

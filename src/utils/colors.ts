@@ -10,6 +10,9 @@ export const colors = {
   primaryIndigo900: indigo[900],
   primaryIndigo800: indigo[800],
 
+  dangerRed600: red[600],
+  okGreen600: green[600],
+
   easy: green[100],
   medium: amber[100],
   hard: red[100],
