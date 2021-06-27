@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
+import { useAppSelector } from "../../utils/typedHooks";
 
 import { Button } from "@material-ui/core";
 
@@ -19,6 +20,7 @@ const PageStyled = styled.section`
 
 export const StartPage: FC = () => {
   const history = useHistory();
+  const { answers } = useAppSelector((state) => state.main);
 
   return (
     <PageStyled>
@@ -31,7 +33,7 @@ export const StartPage: FC = () => {
         size="large"
         onClick={() => history.push("/quiz")}
       >
-        Push to start
+        {answers.length > 0 ? "CONTINUE" : "PUSH TO START"}
       </Button>
     </PageStyled>
   );

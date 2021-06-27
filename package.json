@@ -1,7 +1,8 @@
 {
-  "name": "dom-click",
+  "name": "quiz",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://curillaenator.github.io/quiz",
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@reduxjs/toolkit": "^1.6.0",
@@ -29,7 +30,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -51,6 +54,7 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.7",
-    "@types/styled-components": "^5.1.10"
+    "@types/styled-components": "^5.1.10",
+    "gh-pages": "^3.2.3"
   }
 }
