@@ -1,12 +1,11 @@
 import { FC } from "react";
 import Radio from "@material-ui/core/Radio";
 
-interface IRadio {
-  input: any;
-  meta: any;
-}
+import { FieldRenderProps } from "react-final-form";
 
-export const RadioComp: FC<IRadio> = ({ input, meta, ...props }) => {
+type IRadio = FieldRenderProps<string, any>;
+
+export const RadioComp: FC<IRadio> = ({ input, meta }) => {
 //   console.log(input);
   return (
     <div>

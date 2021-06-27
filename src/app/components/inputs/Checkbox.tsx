@@ -1,26 +1,20 @@
 import { FC } from "react";
-import Checkbox from "@material-ui/core/Checkbox";
+import ChBox from "@material-ui/core/Checkbox";
 
-interface ICheckboxComp {
-  input: any;
-  meta: any;
-  label: any;
-}
+import { FieldRenderProps } from "react-final-form";
 
-export const CheckboxComp: FC<ICheckboxComp> = ({
-  input,
-  meta,
-  label,
-  ...props
-}) => {
+type ICheckbox = FieldRenderProps<boolean, any>;
+
+export const Checkbox: FC<ICheckbox> = ({ input, meta, label }) => {
   // console.log(props);
   return (
     <div>
-      <Checkbox
+      <ChBox
         {...input}
         inputProps={{ "aria-label": "primary checkbox" }}
         id={input.name}
       />
+
       <label htmlFor={input.name} style={{ cursor: "pointer" }}>
         {label}
       </label>

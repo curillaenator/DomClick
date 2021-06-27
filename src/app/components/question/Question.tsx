@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useAppDispatch } from "../../../utils/typedHooks";
 
 import { Button } from "@material-ui/core";
-import { CheckboxComp } from "../inputs/Checkbox";
+import { Checkbox } from "../inputs/Checkbox";
 import { RadioComp } from "../inputs/Radio";
 
 import { handleAnswers } from "../../../redux/reducers/main";
@@ -57,8 +57,8 @@ export const Question: FC<IQRender> = ({
   incorrect_answers,
   curQ,
 }) => {
-  console.log(curQ);
-  
+  // console.log(curQ);
+
   const dispatch = useAppDispatch();
 
   const color = {
@@ -82,8 +82,6 @@ export const Question: FC<IQRender> = ({
     if (type === "boolean") {
       answer = { question: question, answer: Object.values(data) };
     }
-
-    console.log(answer);
 
     dispatch(handleAnswers(answer));
   };
@@ -123,7 +121,7 @@ export const Question: FC<IQRender> = ({
                     name={`OpTiOn${opt}`}
                     label={decode(opt)}
                     type="checkbox"
-                    component={CheckboxComp}
+                    component={Checkbox}
                     key={`OpTiOn${opt}`}
                   />
                 ))}
@@ -132,7 +130,6 @@ export const Question: FC<IQRender> = ({
                 answers.map((opt) => (
                   <Field
                     name={"boolean"}
-                    label={opt}
                     type="radio"
                     value={opt}
                     component={RadioComp}

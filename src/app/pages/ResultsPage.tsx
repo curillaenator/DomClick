@@ -21,7 +21,19 @@ interface IResultStyled {
 }
 
 const PageStyled = styled.section`
-  padding-top: 32px;
+  padding: 32px;
+
+  .summary {
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
 `;
 
 const ResultStyled = styled.div<IResultStyled>`
@@ -33,6 +45,10 @@ const ResultStyled = styled.div<IResultStyled>`
 
   .question {
     margin-bottom: 24px;
+  }
+
+  .answers_string {
+    margin-bottom: 16px;
   }
 `;
 
@@ -49,7 +65,16 @@ export const ResultsPage: FC = () => {
     return { ...q, answer, isCorrect: answer === q.correct_answer };
   });
 
-  console.log(results);
+  const summary = results.reduce((sum: number, q) => {
+    return sum + (q.isCorrect ? 1 : 0);
+  }, 0);
+
+  const decode = (text: any) => {
+    const div = document.createElement("div");
+    div.innerHTML = text;
+    return div.innerText;
+  };
+
   const restart = () => {
     dispatch(resetState(null));
     history.push("/");
@@ -59,16 +84,21 @@ export const ResultsPage: FC = () => {
 
   return (
     <PageStyled>
-      {results.map((result) => (
-        <ResultStyled correct={result.isCorrect}>
-          <h3 className="question">{result.question}</h3>
+      <h2 className="summary">{`${summary} answer out of ${results.length} is correct!`}</h2>
 
-          <div className="answers">
-            <p className="answers_string">{`Your answer: ${result.answer}`}</p>
-            {!result.isCorrect && (
-              <p className="answers_string">{`Correct answer: ${result.correct_answer}`}</p>
-            )}
-          </div>
+      {results.map((result, i) => (
+        <ResultStyled correct={result.isCorrect} key={result.question}>
+          <h3 className="question">{`${i + 1}. ${decode(result.question)}`}</h3>
+
+          <p className="answers_string">{`Your answer: ${decode(
+            result.answer
+          )}`}</p>
+
+          {!result.isCorrect && (
+            <p className="answers_string">{`Correct answer: ${decode(
+              result.correct_answer
+            )}`}</p>
+          )}
         </ResultStyled>
       ))}
 
