@@ -42,6 +42,8 @@ const ResultStyled = styled.div<IResultStyled>`
   border-radius: 4px;
   border: 2px solid
     ${({ correct }) => (correct ? colors.okGreen600 : colors.dangerRed600)};
+  background-color: ${({ correct }) =>
+    correct ? colors.okGreen100 : colors.basicWhite};
 
   .question {
     margin-bottom: 24px;

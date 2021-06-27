@@ -1,5 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
+import { Redirect } from "react-router-dom";
 import { useAppSelector } from "../../utils/typedHooks";
 
 import Stepper from "@material-ui/core/Stepper";
@@ -10,8 +11,13 @@ import { Question } from "../components/question/Question";
 const PageStyled = styled.section``;
 
 export const QuizPage: FC = () => {
-  const { questions, curQuestion } = useAppSelector((state) => state.main);
+  const { questions, curQuestion, answers } = useAppSelector(
+    (state) => state.main
+  );
+
   const question = { ...questions[curQuestion], curQ: curQuestion };
+
+  if (answers.length >= 10) return <Redirect to="results" />;
 
   return (
     <PageStyled>
@@ -22,7 +28,7 @@ export const QuizPage: FC = () => {
           </Step>
         ))}
       </Stepper>
-      
+
       <Question {...question} />
     </PageStyled>
   );

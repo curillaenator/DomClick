@@ -35,6 +35,7 @@ const QuestionStyled = styled.div<IQuestionStyled>`
       align-items: center;
       width: fit-content;
       height: 40px;
+      margin-left: 32px;
       padding: 0 16px;
       border-radius: 4px;
       background-color: ${({ color }) => color};

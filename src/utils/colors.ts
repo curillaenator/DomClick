@@ -12,6 +12,7 @@ export const colors = {
 
   dangerRed600: red[600],
   okGreen600: green[600],
+  okGreen100: green[100],
 
   easy: green[100],
   medium: amber[100],

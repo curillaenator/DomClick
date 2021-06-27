@@ -1,9 +1,6 @@
-# Quiz
-
-<!-- .. [Create React App](https://github.com/facebook/create-react-app). -->
+# Quiz App
 
 ## Run
-
 ### `npm start`
 then
 ### `npm start`

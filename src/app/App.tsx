@@ -15,13 +15,9 @@ import { colors } from "../utils/colors";
 
 const AppStyled = styled.main`
   max-width: 1280px;
-  min-width: 320px;
+  min-width: 768px;
   margin: 0 auto;
   color: ${colors.primaryBrownDark};
-
-  @media (min-width: 768px) {
-    /* padding: 0 56px; */
-  }
 `;
 
 export const App: FC = () => {
